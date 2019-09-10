@@ -9,10 +9,15 @@ import styled from 'styled-components';
 
 //fakedata
 const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const player = {
-  number: [1, 2],
-  position: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  symbol: ['O', 'X']
+const player1 = {
+  number: 1,
+  position: [],
+  symbol: 'O'
+}
+const player2 = {
+  number: 2,
+  position: [],
+  symbol: 'X'
 }
 
 //designs
@@ -36,14 +41,31 @@ const Players = styled.div`
 class App extends React.Component {
 
   state = {
-    isActive: false
+    isPlayer1Active: true,
+    isPlayer2Active: false
   }
 
   markBox = (event) => {
     console.dir(event.target);
     console.log('clicked');
+    console.log(this.state.isPlayer2Active)
+
+    //change the classname of the occupied box
     event.target.className = 'occupied';
-    event.target.textContent = 'X';
+
+    //set state
+    this.setState({
+      isPlayer1Active: !this.state.isPlayer1Active,
+      isPlayer2Active: !this.state.isPlayer2Active
+    })
+
+
+    if (this.state.isPlayer1Active === true) {
+      event.target.textContent = player1.symbol;
+    } else {
+      event.target.textContent = player2.symbol;
+    }
+    
   }
 
   render() {
@@ -54,7 +76,7 @@ class App extends React.Component {
           <h2>Player 1</h2>
           <h2>Player 2</h2>
         </Players>
-        <Box data={data} player={player} markBox={this.markBox} />
+        <Box data={data} player1={player1} player2={player2} markBox={this.markBox} />
       </Center>
     );
   }
