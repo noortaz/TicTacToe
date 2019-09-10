@@ -3,12 +3,6 @@ import React from 'react';
 //import the styles components
 import styled from 'styled-components';
 
-//fakedata
-const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const player1 = {
-  position: 0,
-  symbol: ['O', 'X']
-}
 
 //designs
 const Big = styled.div`
@@ -32,8 +26,8 @@ class Box extends React.Component {
   render() {
     return (
       <Big>
-        {data.map(item => {
-          return <Small/>
+        {this.props.data.map((item, index) => {
+          return <Small className='box--small' key={index} onClick={this.props.markBox}/>
         })}
       </Big>
     )

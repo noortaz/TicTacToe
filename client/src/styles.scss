@@ -1,0 +1,16 @@
+.box-small {
+  height: 5rem;
+  width: 5rem;
+  background-color: black;
+  border: 2px solid grey;
+}
+
+.occupied {
+  @extend .box-small;
+  background-color: #323232;
+
+  color: white;
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+}
