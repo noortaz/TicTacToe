@@ -20,14 +20,15 @@ const Small = styled.div`
   width: 5rem;
   background-color: black;
   border: 2px solid grey;
+  display: ${props => (props.startGame ? 'flex' : 'none')};
 `;
 
 class Box extends React.Component {
   render() {
     return (
       <Big>
-        {this.props.data.map((item, index) => {
-          return <Small className='box--small' key={index} onClick={this.props.markBox}/>
+        {this.props.position.map((item) => {
+          return <Small id={item} className='box--small' key={item} onClick={this.props.markBox} startGame={this.props.startGame}/>
         })}
       </Big>
     )

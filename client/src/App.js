@@ -7,19 +7,6 @@ import Box from './Box';
 //import the styles components
 import styled from 'styled-components';
 
-//fakedata
-const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const player1 = {
-  number: 1,
-  position: [],
-  symbol: 'O'
-}
-const player2 = {
-  number: 2,
-  position: [],
-  symbol: 'X'
-}
-
 //designs
 const Center = styled.div`
   display: flex;
@@ -37,33 +24,61 @@ const Players = styled.div`
   justify-content: space-between;
 `;
 
+//fakedata
+const position = ["a1", "a2", "a3", "b1", "b2", "b3", "c1", "c2", "c3"];
+const player1 = {
+  number: 1,
+  position: [],
+  symbol: 'O'
+}
+const player2 = {
+  number: 2,
+  position: [],
+  symbol: 'X'
+}
+
 
 class App extends React.Component {
 
   state = {
-    isPlayer1Active: true,
+    isPlayer1Active: false,
     isPlayer2Active: false
   }
 
+  startGame = () => {
+    this.setState({
+      isPlayer1Active: true
+    })
+  }
+
   markBox = (event) => {
-    console.dir(event.target);
-    console.log('clicked');
-    console.log(this.state.isPlayer2Active)
-
-    //change the classname of the occupied box
-    event.target.className = 'occupied';
-
     //set state
     this.setState({
-      isPlayer1Active: !this.state.isPlayer1Active,
-      isPlayer2Active: !this.state.isPlayer2Active
+      isPlayer2Active: !this.state.isPlayer2Active,
+
     })
 
+    // console.dir(event.target);
+    // console.log('clicked');
+    // console.log(event.target.id)
+    console.log('player1: ', player1.position)
+    console.log('player2: ', player2.position)
 
-    if (this.state.isPlayer1Active === true) {
-      event.target.textContent = player1.symbol;
-    } else {
-      event.target.textContent = player2.symbol;
+    //change the classname of the occupied box
+    
+    if (event.target.className !== 'occupied') {
+      event.target.className = 'occupied';
+    }
+
+    //store their position
+    if (event.target.textContent === '') {
+      if (this.state.isPlayer2Active === true) {
+        event.target.textContent = player2.symbol;
+        player2.position.push(event.target.id);
+      } else {
+        event.target.textContent = player1.symbol;
+        player1.position.push(event.target.id);
+      }
     }
     
   }
@@ -76,7 +91,8 @@ class App extends React.Component {
           <h2>Player 1</h2>
           <h2>Player 2</h2>
         </Players>
-        <Box data={data} player1={player1} player2={player2} markBox={this.markBox} />
+        <button onClick={this.startGame}>Start Game</button>
+        <Box position={position} player1={player1} player2={player2} markBox={this.markBox} startGame={this.startGame}/>
       </Center>
     );
   }
@@ -84,3 +100,35 @@ class App extends React.Component {
 }
 
 export default App;
+
+
+//declare who is the winner
+
+// let row1 = player1.position.map(item => {
+//   return item.includes("a");
+// })
+// let row2 = player1.position.map(item => {
+//   return item.includes("b");
+// })
+// let row3 = player1.position.map(item => {
+//   return item.includes("c");
+// })
+// let column1 = player1.position.map(item => {
+//   return item.includes("1");
+// })
+// let column2 = player1.position.map(item => {
+//   return item.includes("2");
+// })
+// let column3 = player1.position.map(item => {
+//   return item.includes("3");
+// })
+// let diagonal1 = player1.position.map(item => {
+//   return item.includes("a1", "b2", "c3");
+// })
+// let diagonal2 = player1.position.map(item => {
+//   return item.includes("a3", "b2", "c1");
+// })
+
+// if (player1.position === row1) {
+//   console.log('winner')
+// }
